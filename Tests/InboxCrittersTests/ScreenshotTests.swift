@@ -22,15 +22,16 @@ final class ScreenshotTests: XCTestCase {
         try FileManager.default.createDirectory(at: outputDir, withIntermediateDirectories: true)
         for (w, h) in sizes {
             let label = "\(Int(w))x\(Int(h))"
-            save(MenuShot(w: w, h: h),    name: "01-menu-\(label)")
-            save(GameShot(w: w, h: h),    name: "02-game-\(label)")
-            save(SortedShot(w: w, h: h),  name: "03-sorted-\(label)")
-            save(BucketsShot(w: w, h: h), name: "04-buckets-\(label)")
+            save(MenuShot(w: w, h: h), w: w, h: h,    name: "01-menu-\(label)")
+            save(GameShot(w: w, h: h), w: w, h: h,    name: "02-game-\(label)")
+            save(SortedShot(w: w, h: h), w: w, h: h,  name: "03-sorted-\(label)")
+            save(BucketsShot(w: w, h: h), w: w, h: h, name: "04-buckets-\(label)")
         }
     }
 
-    private func save(_ view: some View, name: String) {
+    private func save(_ view: some View, w: CGFloat = 0, h: CGFloat = 0, name: String) {
         let renderer = ImageRenderer(content: view)
+        if w > 0 && h > 0 { renderer.proposedSize = .init(width: w, height: h) }
         renderer.scale = 1.0
         guard let uiImage = renderer.uiImage,
               let data = uiImage.jpegData(compressionQuality: 0.92) else { XCTFail("Render failed: \(name)"); return }
