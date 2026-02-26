@@ -65,6 +65,7 @@ struct InboxView: View {
                     .font(.system(size: 20))
                     .foregroundStyle(.white.opacity(0.7))
             }
+            .accessibilityLabel("Show sorted thoughts")
         }
     }
 
@@ -86,6 +87,8 @@ struct InboxView: View {
                     .foregroundStyle(inputText.isEmpty ? .white.opacity(0.3) : .cyan)
             }
             .disabled(inputText.isEmpty)
+            .accessibilityLabel("Send thought")
+            .accessibilityHint("Sends your thought as a floating orb into the brain dump")
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
@@ -98,6 +101,8 @@ struct InboxView: View {
         ZStack {
             Color.black.opacity(0.75).ignoresSafeArea()
                 .onTapGesture { withAnimation { showStats = false } }
+                .accessibilityAddTraits(.isButton)
+                .accessibilityLabel("Close stats")
             VStack(spacing: 0) {
                 Spacer().frame(height: 100)
                 VStack(spacing: 0) {
@@ -110,6 +115,7 @@ struct InboxView: View {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundStyle(.white.opacity(0.5))
                         }
+                        .accessibilityLabel("Close")
                     }
                     .padding()
 
